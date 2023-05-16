@@ -1,5 +1,10 @@
 FROM debian
 
+# Set the environment variables to be used in the sed command below
+ARG WORDPRESS_DATABASE
+ARG WORDPRESS_USER
+ARG WORDPRESS_PASSWORD
+
 # Set the working directory to /var/www/html ( Where wordpress will be installed )
 WORKDIR /var/www/html/
 
@@ -25,9 +30,9 @@ RUN wget https://wordpress.org/latest.tar.gz && \
 
 # Configure wordpress to use the database created in the mariadb container
 RUN cp wp-config-sample.php wp-config.php && \
-	sed -i "s/database_name_here/wordpress_db/g" wp-config.php && \
-	sed -i "s/username_here/wuser/g" wp-config.php && \
-	sed -i "s/password_here/wpass/g" wp-config.php && \
+	sed -i "s/database_name_here/$WORDPRESS_DATABASE/g" wp-config.php && \
+	sed -i "s/username_here/$WORDPRESS_USER/g" wp-config.php && \
+	sed -i "s/password_here/$WORDPRESS_PASSWORD/g" wp-config.php && \
 	sed -i "s/localhost/mariadb/g" wp-config.php
 
 # Create the directory where php-fpm will store the pid file

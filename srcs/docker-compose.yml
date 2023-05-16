@@ -5,22 +5,59 @@ name: inception
 services:
   mariadb:
     container_name: mariadb
-    build: ./requirements/mariadb
-    env_file:
-      - .env
+    build:
+      context: requirements/mariadb
+      args:
+        - WORDPRESS_DATABASE
+        - WORDPRESS_USER
+        - WORDPRESS_PASSWORD
     networks:
       - inception
     volumes:
       - mariadb:/var/lib/mysql
 
-# Will create a bridge network by default
+  wordpress:
+    container_name: wordpress
+    build:
+      context: requirements/wordpress
+      args:
+        - WORDPRESS_DATABASE
+        - WORDPRESS_USER
+        - WORDPRESS_PASSWORD
+    networks:
+      - inception
+    volumes:
+      - wordpress:/var/www/html
+    depends_on:
+      - mariadb
+
+  nginx:
+    container_name: nginx
+    build:
+      context: requirements/nginx
+    networks:
+      - inception
+    ports:
+      - 443:443
+    volumes:
+      - wordpress:/var/www/html
+    depends_on:
+      - wordpress
+
+# Create a bridge network by default
 networks:
   inception:
     name: inception
 
+# Create volumes
 volumes:
   mariadb:
     driver_opts:
       o: bind
       type: none
-      device: /home/lalex-ku/data/mysql
+      device: ${HOME}/data/mariadb
+  wordpress:
+    driver_opts:
+      o: bind
+      type: none
+      device: ${HOME}/data/wordpress

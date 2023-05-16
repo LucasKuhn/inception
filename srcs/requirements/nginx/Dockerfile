@@ -10,7 +10,7 @@ RUN openssl req -batch -x509 -sha256 -nodes -newkey rsa:2048 -days 365 \
 	-out /etc/ssl/certs/localhost.crt
 
 # Copy the nginx configuration file
-COPY ./https.conf /etc/nginx/conf.d
+COPY ./conf/https.conf /etc/nginx/conf.d
 
 # Expose port 443 ( https )
 EXPOSE 443
