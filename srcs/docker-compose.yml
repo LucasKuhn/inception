@@ -1,0 +1,26 @@
+# Name of the project
+name: inception
+
+# Services to run ( containers )
+services:
+  mariadb:
+    container_name: mariadb
+    build: ./requirements/mariadb
+    env_file:
+      - .env
+    networks:
+      - inception
+    volumes:
+      - mariadb:/var/lib/mysql
+
+# Will create a bridge network by default
+networks:
+  inception:
+    name: inception
+
+volumes:
+  mariadb:
+    driver_opts:
+      o: bind
+      type: none
+      device: /home/lalex-ku/data/mysql
