@@ -1,4 +1,4 @@
-# Name of the project
+# Project name ( used as prefix for containers )
 name: inception
 
 # Services to run ( containers )
@@ -44,12 +44,12 @@ services:
     depends_on:
       - wordpress
 
-# Create a bridge network by default
+# Create the network ( bridge by default )
 networks:
   inception:
     name: inception
 
-# Create volumes
+# Create volumes ( VOLUMES_PATH exported by Makefile )
 volumes:
   mariadb:
     driver_opts:
