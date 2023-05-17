@@ -1,5 +1,5 @@
 # Base image for debian
-FROM debian
+FROM debian:bullseye
 
 ARG WORDPRESS_DATABASE
 ARG WORDPRESS_USER

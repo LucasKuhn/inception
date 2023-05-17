@@ -1,4 +1,4 @@
-FROM debian
+FROM debian:bullseye
 
 # Set the environment variables to be used in the sed command below
 ARG WORDPRESS_DATABASE

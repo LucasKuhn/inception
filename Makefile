@@ -1,8 +1,12 @@
-LOGIN	:= lalex-ku
-COMPOSE	:= srcs/docker-compose.yml
+LOGIN			:= lalex-ku
+COMPOSE			:= srcs/docker-compose.yml
+VOLUMES_PATH	:= /home/$(LOGIN)/data
 
-# Change this path to store volumes in another place
-export VOLUMES_PATH	:= /home/$(LOGIN)/data
+# Change path if runing on MacOS
+ifeq ($(shell uname),Darwin)
+VOLUMES_PATH	:= $(HOME)/data
+
+export VOLUMES_PATH # Make it available for the Dockerfiles
 
 all: srcs/.env up
 
@@ -24,4 +28,4 @@ fprune:
 setup:
 	mkdir -p $(VOLUMES_PATH)/wordpress
 	mkdir -p $(VOLUMES_PATH)/mariadb
-	grep $(LOGIN) /etc/hosts || echo "127.0.0.1 $(LOGIN).42.fr" >> /etc/hosts
+	grep $(LOGIN).42.fr /etc/hosts || echo "127.0.0.1 $(LOGIN).42.fr" >> /etc/hosts
