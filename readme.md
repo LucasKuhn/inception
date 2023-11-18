@@ -9,4 +9,4 @@ There is a step by step [tutorial on Notion](https://www.notion.so/lalex-ku/Ince
 # Updates
 
 Please feel free to open a pull request!
-Specially if you find any errors of if there is something which could be simplified - I want this to be as simple and as clear as possible.
+Specially if you find any errors of if there is something which could be simplified.
